@@ -17,10 +17,10 @@ IF OBJECT_ID('holder', 'U') IS NOT NULL
     DROP TABLE holder;
 IF OBJECT_ID('manager', 'U') IS NOT NULL
     DROP TABLE manager;
-IF OBJECT_ID('workShop', 'U') IS NOT NULL
-    DROP TABLE workShop;
 IF OBJECT_ID('staff', 'U') IS NOT NULL
     DROP TABLE staff;
+IF OBJECT_ID('workShop', 'U') IS NOT NULL
+    DROP TABLE workShop;
 IF OBJECT_ID('car', 'U') IS NOT NULL
     DROP TABLE car;
 IF OBJECT_ID('person', 'U') IS NOT NULL
@@ -50,19 +50,20 @@ create table car
 	check(color in ('White','Black','Green','Blue','Red'))
 );
 
-create table staff
-(
-	pID integer not null,
-	workShopID integer,
-	primary key (pID),
-	foreign key (pID) references person(pID) on delete cascade
-);
-
 create table workShop
 (
 	shopID integer not null,
 	shopAddress nvarchar(50),
 	primary key (shopID)
+);
+
+create table staff
+(
+	pID integer not null,
+	workShopID integer not null,
+	primary key (pID),
+	foreign key (pID) references person(pID) on delete cascade,
+	foreign key (workShopID) references workShop(shopID) on delete cascade
 );
 
 create table manager
